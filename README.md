@@ -1,5 +1,5 @@
 # project-lvl2-s475
-[![Maintainability](https://api.codeclimate.com/v1/badges/31863e92491f55bbfc40/maintainability)](https://codeclimate.com/github/AnastasiyaYS/project-lvl2-s475/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/31863e92491f55bbfc40/test_coverage)](https://codeclimate.com/github/AnastasiyaYS/project-lvl2-s475/test_coverage) [![Build Status](https://travis-ci.org/AnastasiyaYS/project-lvl1-s474.svg?branch=master)](https://travis-ci.org/AnastasiyaYS/project-lvl1-s474)
+[![Maintainability](https://api.codeclimate.com/v1/badges/31863e92491f55bbfc40/maintainability)](https://codeclimate.com/github/AnastasiyaYS/project-lvl2-s475/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/31863e92491f55bbfc40/test_coverage)](https://codeclimate.com/github/AnastasiyaYS/project-lvl2-s475/test_coverage) [![Build Status](https://travis-ci.org/AnastasiyaYS/project-lvl2-s475.svg?branch=master)](https://travis-ci.org/AnastasiyaYS/project-lvl2-s475)
 
 Описание
 

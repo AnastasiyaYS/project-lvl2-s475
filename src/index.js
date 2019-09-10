@@ -1,12 +1,16 @@
-const _ = require('lodash/fp');
+import parsingToObject from './utils/parsers';
+
 const fs = require('fs');
+
+const _ = require('lodash/fp');
 const path = require('path');
 
 export default (firstConfig, secondConfig) => {
   const firstPath = path.resolve(process.cwd(), firstConfig);
   const secondPath = path.resolve(process.cwd(), secondConfig);
-  const beforeObj = JSON.parse(fs.readFileSync(firstPath, 'utf8'));
-  const afterObj = JSON.parse(fs.readFileSync(secondPath, 'utf8'));
+
+  const beforeObj = parsingToObject(path.extname(firstPath), fs.readFileSync(firstPath, 'utf8'));
+  const afterObj = parsingToObject(path.extname(secondPath), fs.readFileSync(secondPath, 'utf8'));
 
   const resWithoutAdded = Object.entries(beforeObj).reduce((acc, [key, value]) => {
     if (_.has(key, afterObj)) {

@@ -5,11 +5,14 @@ const fs = require('fs');
 
 const buildPath = fileName => path.resolve(__dirname, `__fixtures__/${fileName}`);
 
-test.each([['JSON', buildPath('before.json'), buildPath('after.json')],
-  ['YAML', buildPath('before.yml'), buildPath('after.yml')],
-  ['INI', buildPath('before.ini'), buildPath('after.ini')]])(
-  'compare flat %s files',
-  (format, pathToFile1, pathToFile2) => {
-    expect(genDiff(pathToFile1, pathToFile2)).toEqual(fs.readFileSync(buildPath('result.txt'), 'utf8'));
+test.each([['flat JSON', buildPath('flatBefore.json'), buildPath('flatAfter.json'), 'flatResult.txt'],
+  ['flat YAML', buildPath('flatBefore.yml'), buildPath('flatAfter.yml'), 'flatResult.txt'],
+  ['flat INI', buildPath('flatBefore.ini'), buildPath('flatAfter.ini'), 'flatResult.txt'],
+  ['tree JSON', buildPath('treeBefore.json'), buildPath('treeAfter.json'), 'treeResult.txt'],
+  ['tree YAML', buildPath('treeBefore.yml'), buildPath('treeAfter.yml'), 'treeResult.txt'],
+  ['tree INI', buildPath('treeBefore.ini'), buildPath('treeAfter.ini'), 'treeResult.txt']])(
+  'compare %s files',
+  (format, pathToFile1, pathToFile2, result) => {
+    expect(genDiff(pathToFile1, pathToFile2)).toEqual(fs.readFileSync(buildPath(result), 'utf8'));
   },
 );

@@ -48,3 +48,13 @@ $ gendiff firstPath.yml secondPath.yml
 $ gendiff firstPath.ini secondPath.ini
 ```
 [![asciicast](https://asciinema.org/a/267322.svg)](https://asciinema.org/a/267322)
+
+### **Compare tree files**
+```sh
+$ gendiff firstPath.json secondPath.json
+```
+or
+```sh
+$ gendiff firstPath.yml secondPath.ini
+```
+[![asciicast](https://asciinema.org/a/268758.svg)](https://asciinema.org/a/268758)

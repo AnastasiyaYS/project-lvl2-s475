@@ -3,7 +3,7 @@ import genDiff from '../src';
 const path = require('path');
 const fs = require('fs');
 
-const buildPath = fileName => path.resolve(__dirname, `__fixtures__/${fileName}`);
+const buildPath = (fileName) => path.resolve(__dirname, `__fixtures__/${fileName}`);
 
 test.each([['flat JSON', buildPath('flatBefore.json'), buildPath('flatAfter.json'), 'flatResult.txt'],
   ['flat YAML', buildPath('flatBefore.yml'), buildPath('flatAfter.yml'), 'flatResult.txt'],

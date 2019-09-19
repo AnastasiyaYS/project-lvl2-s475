@@ -52,13 +52,15 @@ $ gendiff firstPath.ini secondPath.ini
 ### **Compare tree files (JSON, YAML, INI)**
 ```sh
 $ gendiff firstPath.json secondPath.json
-or
+```
+&nbsp;or
+```sh
 $ gendiff firstPath.yml secondPath.ini
 ```
 [![asciicast](https://asciinema.org/a/268758.svg)](https://asciinema.org/a/268758)
 
-### **Choose format for output: tree (default) or plain**
-Display comparison in tree format (default)
+### **Сhoose one of unstructured output formats: tree (by default) or plain**
+Display comparison in tree format (by default)
 ```sh
 $ gendiff firstPath.yml secondPath.ini
 ```
@@ -66,4 +68,10 @@ Display comparison in plain format
 ```sh
 $ gendiff -f plain firstPath.json secondPath.ini
 ```
-[![asciicast](https://asciinema.org/a/269304.svg)](https://asciinema.org/a/269304)
+[![asciicast](https://asciinema.org/a/269569.svg)](https://asciinema.org/a/269569)
+
+### **Choose JSON output format**
+```sh
+$ gendiff -f json firstPath.ini secondPath.yml
+```
+[![asciicast](https://asciinema.org/a/269562.svg)](https://asciinema.org/a/269562)

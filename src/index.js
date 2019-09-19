@@ -1,6 +1,7 @@
 import parsingToObject from './utils/parsers';
 import renderTree from './formatters/renderTree';
 import renderPlain from './formatters/renderPlain';
+import renderJson from './formatters/renderJson';
 
 const fs = require('fs');
 
@@ -43,6 +44,7 @@ const parse = (beforeObj, afterObj) => {
 const formatProperties = {
   tree: renderTree,
   plain: renderPlain,
+  json: renderJson,
 };
 
 export default (firstConfig, secondConfig, format = 'tree') => {

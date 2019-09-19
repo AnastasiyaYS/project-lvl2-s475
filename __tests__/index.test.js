@@ -28,3 +28,15 @@ test.each([['flat JSON', buildPath('flatBefore.json'), buildPath('flatAfter.json
     expect(genDiff(pathToFile1, pathToFile2, 'plain')).toEqual(fs.readFileSync(buildPath(result), 'utf8'));
   },
 );
+
+test.each([['flat JSON', buildPath('flatBefore.json'), buildPath('flatAfter.json'), 'flatResult_jsonFormat.txt'],
+  ['flat YAML', buildPath('flatBefore.yml'), buildPath('flatAfter.yml'), 'flatResult_jsonFormat.txt'],
+  ['flat INI', buildPath('flatBefore.ini'), buildPath('flatAfter.ini'), 'flatResult_jsonFormat.txt'],
+  ['tree JSON', buildPath('treeBefore.json'), buildPath('treeAfter.json'), 'treeResult_jsonFormat.txt'],
+  ['tree YAML', buildPath('treeBefore.yml'), buildPath('treeAfter.yml'), 'treeResult_jsonFormat.txt'],
+  ['tree INI', buildPath('treeBefore.ini'), buildPath('treeAfter.ini'), 'treeResult_jsonFormat.txt']])(
+  'compare %s files with json format',
+  (format, pathToFile1, pathToFile2, result) => {
+    expect(genDiff(pathToFile1, pathToFile2, 'json')).toEqual(fs.readFileSync(buildPath(result), 'utf8'));
+  },
+);

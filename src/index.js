@@ -1,14 +1,10 @@
-import parsingToObject from './utils/parsers';
-import renderTree from './formatters/renderTree';
-import renderPlain from './formatters/renderPlain';
-import renderJson from './formatters/renderJson';
+import path from 'path';
+import _ from 'lodash/fp';
+import fs from 'fs';
+import parse from './utils/parsers';
+import formatProperties from './formatters/index';
 
-const fs = require('fs');
-
-const _ = require('lodash/fp');
-const path = require('path');
-
-const parse = (beforeObj, afterObj) => {
+const generateDiff = (beforeObj, afterObj) => {
   const resWithoutAdded = Object.entries(beforeObj).reduce((acc, [key, value]) => {
     if (_.has(key, afterObj)) {
       if (value instanceof Object && afterObj[key] instanceof Object) {
@@ -41,19 +37,13 @@ const parse = (beforeObj, afterObj) => {
   return res;
 };
 
-const formatProperties = {
-  tree: renderTree,
-  plain: renderPlain,
-  json: renderJson,
-};
-
 export default (firstConfig, secondConfig, format = 'tree') => {
   const firstPath = path.resolve(process.cwd(), firstConfig);
   const secondPath = path.resolve(process.cwd(), secondConfig);
 
-  const beforeObj = parsingToObject(path.extname(firstPath), fs.readFileSync(firstPath, 'utf8'));
-  const afterObj = parsingToObject(path.extname(secondPath), fs.readFileSync(secondPath, 'utf8'));
+  const beforeObj = parse(path.extname(firstPath), fs.readFileSync(firstPath, 'utf8'));
+  const afterObj = parse(path.extname(secondPath), fs.readFileSync(secondPath, 'utf8'));
 
-  const ast = parse(beforeObj, afterObj);
+  const ast = generateDiff(beforeObj, afterObj);
   return formatProperties[format](ast);
 };

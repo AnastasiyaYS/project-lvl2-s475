@@ -1,7 +1,6 @@
 #!/usr/bin/env node
+import program from 'commander';
 import genDiff from '..';
-
-const program = require('commander');
 
 program
   .version('1.6.0')

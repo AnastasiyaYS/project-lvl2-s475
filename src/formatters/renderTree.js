@@ -1,4 +1,4 @@
-const _ = require('lodash/fp');
+import _ from 'lodash/fp';
 
 const objToStr = (obj, spaces) => {
   const res = Object.entries(obj).reduce((acc, [key, value]) => `${acc}${spaces}      ${key}: ${value}\n`, '{\n');

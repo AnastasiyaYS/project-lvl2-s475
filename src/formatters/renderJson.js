@@ -1,4 +1,4 @@
-const _ = require('lodash/fp');
+import _ from 'lodash/fp';
 
 const getProcessedValue = (value) => {
   if (_.isObject(value)) {

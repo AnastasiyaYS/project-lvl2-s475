@@ -9,7 +9,7 @@ const generateDiff = (beforeObj, afterObj) => {
     if (_.has(key, afterObj)) {
       if (value instanceof Object && afterObj[key] instanceof Object) {
         return [...acc, {
-          key, status: 'not changed', beforeValue: '', afterValue: '', children: parse(value, afterObj[key]),
+          key, status: 'not changed', beforeValue: '', afterValue: '', children: generateDiff(value, afterObj[key]),
         }];
       }
       if (value === afterObj[key]) {

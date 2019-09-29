@@ -1,7 +1,7 @@
 {
     common: {
         setting1: Value 1
-      - setting2: 200
+      - setting2: abcd
       - setting3: true
       + setting3: {
             key: value
@@ -26,9 +26,9 @@
       + nest: str
     }
   - group2: {
-        abc: 12345
+        abc: abcd
     }
   + group3: {
-        fee: 100500
+        fee: abcd
     }
 }

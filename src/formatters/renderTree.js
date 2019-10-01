@@ -1,33 +1,32 @@
 import _ from 'lodash/fp';
 
-const objToStr = (obj, spaces) => {
-  const res = Object.entries(obj).reduce((acc, [key, value]) => `${acc}${spaces}      ${key}: ${value}\n`, '{\n');
-  return `${res}${spaces}  }`;
+const objToStr = (value, spaces) => {
+  if (_.isObject(value)) {
+    const res = Object.entries(value).reduce((acc, [key, val]) => `${acc}${spaces}      ${key}: ${val}\n`, '{\n');
+    return `${res}${spaces}  }`;
+  }
+  return value;
 };
 
 export default (ast) => {
   const space = '  ';
-  const iter = (arr, depth) => arr.reduce((acc, value) => {
+  const iter = (arr, depth) => arr.map((node) => {
     const spacesCount = 2 * depth - 1;
-    const beforeValue = _.isObject(value.beforeValue)
-      ? objToStr(value.beforeValue, space.repeat(spacesCount)) : value.beforeValue;
-    const afterValue = _.isObject(value.afterValue)
-      ? objToStr(value.afterValue, space.repeat(spacesCount)) : value.afterValue;
-    switch (value.type) {
+    const beforeValue = objToStr(node.beforeValue, space.repeat(spacesCount));
+    const afterValue = objToStr(node.afterValue, space.repeat(spacesCount));
+    switch (node.type) {
       case 'unchanged':
-        if (value.children instanceof Array) {
-          return [...acc, `${space.repeat(spacesCount)}  ${value.key}: ${iter(value.children, depth + 1).join('\n')}\n${space.repeat(spacesCount)}  }`];
+        if (node.children) {
+          return `${space.repeat(spacesCount)}  ${node.key}: {\n${iter(node.children, depth + 1).join('\n')}\n${space.repeat(spacesCount)}  }`;
         }
-        return [...acc, `${space.repeat(spacesCount)}  ${value.key}: ${value.beforeValue}`];
+        return `${space.repeat(spacesCount)}  ${node.key}: ${node.beforeValue}`;
       case 'updated':
-        return [...acc, `${space.repeat(spacesCount)}- ${value.key}: ${beforeValue}\n${space.repeat(spacesCount)}+ ${value.key}: ${afterValue}`];
+        return `${space.repeat(spacesCount)}- ${node.key}: ${beforeValue}\n${space.repeat(spacesCount)}+ ${node.key}: ${afterValue}`;
       case 'removed':
-        return [...acc, `${space.repeat(spacesCount)}- ${value.key}: ${beforeValue}`];
+        return `${space.repeat(spacesCount)}- ${node.key}: ${beforeValue}`;
       case 'added':
-        return [...acc, `${space.repeat(spacesCount)}+ ${value.key}: ${afterValue}`];
-      default:
-        return acc;
+        return `${space.repeat(spacesCount)}+ ${node.key}: ${afterValue}`;
     }
-  }, '{');
-  return `${iter(ast, 1).join('\n')}\n}`;
+  });
+  return `{\n${iter(ast, 1).join('\n')}\n}`;
 };

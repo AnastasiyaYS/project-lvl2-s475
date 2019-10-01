@@ -11,22 +11,20 @@ const getProcessedValue = (value) => {
 };
 
 export default (ast) => {
-  const iter = (arr, parent) => arr.reduce((acc, value) => {
-    switch (value.type) {
+  const iter = (arr, parent) => arr.map((node) => {
+    switch (node.type) {
       case 'unchanged':
-        if (value.children instanceof Array) {
-          return [...acc, iter(value.children, `${parent}${value.key}.`).join('\n')];
+        if (node.children) {
+          return _.compact(iter(node.children, `${parent}${node.key}.`)).join('\n');
         }
-        return acc;
+        return null;
       case 'updated':
-        return [...acc, `Property '${parent}${value.key}' was updated. From ${getProcessedValue(value.beforeValue)} to ${getProcessedValue(value.afterValue)}`];
+        return `Property '${parent}${node.key}' was updated. From ${getProcessedValue(node.beforeValue)} to ${getProcessedValue(node.afterValue)}`;
       case 'removed':
-        return [...acc, `Property '${parent}${value.key}' was removed`];
+        return `Property '${parent}${node.key}' was removed`;
       case 'added':
-        return [...acc, `Property '${parent}${value.key}' was added with value: ${getProcessedValue(value.afterValue)}`];
-      default:
-        return acc;
+        return `Property '${parent}${node.key}' was added with value: ${getProcessedValue(node.afterValue)}`;
     }
-  }, []);
-  return iter(ast, '').join('\n');
+  });
+  return _.compact(iter(ast, '')).join('\n');
 };

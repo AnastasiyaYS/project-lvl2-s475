@@ -10,7 +10,7 @@ const generateDiff = (beforeObj, afterObj) => {
     if (_.has(key, beforeObj) && _.has(key, afterObj)) {
       if (beforeObj[key] instanceof Object && afterObj[key] instanceof Object) {
         return {
-          key, type: 'unchanged', children: generateDiff(beforeObj[key], afterObj[key]),
+          key, type: 'parent', children: generateDiff(beforeObj[key], afterObj[key]),
         };
       }
       if (beforeObj[key] === afterObj[key]) {

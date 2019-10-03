@@ -13,10 +13,9 @@ const getProcessedValue = (value) => {
 export default (ast) => {
   const iter = (arr, parent) => arr.map((node) => {
     switch (node.type) {
+      case 'parent':
+        return _.compact(iter(node.children, `${parent}${node.key}.`)).join('\n');
       case 'unchanged':
-        if (node.children) {
-          return _.compact(iter(node.children, `${parent}${node.key}.`)).join('\n');
-        }
         return null;
       case 'updated':
         return `Property '${parent}${node.key}' was updated. From ${getProcessedValue(node.beforeValue)} to ${getProcessedValue(node.afterValue)}`;
@@ -24,6 +23,8 @@ export default (ast) => {
         return `Property '${parent}${node.key}' was removed`;
       case 'added':
         return `Property '${parent}${node.key}' was added with value: ${getProcessedValue(node.afterValue)}`;
+      default:
+        return 'error';
     }
   });
   return _.compact(iter(ast, '')).join('\n');

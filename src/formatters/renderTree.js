@@ -26,7 +26,7 @@ export default (ast) => {
       case 'added':
         return `${space.repeat(spacesCount)}+ ${node.key}: ${afterValue}`;
       default:
-        return 'error';
+        throw new Error('Nonexistent node type');
     }
   });
   return _.flattenDeep(['{', iter(ast, 1), '}']).join('\n');

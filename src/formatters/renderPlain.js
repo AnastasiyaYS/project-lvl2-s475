@@ -14,7 +14,7 @@ export default (ast) => {
   const iter = (arr, parent) => arr.map((node) => {
     switch (node.type) {
       case 'parent':
-        return _.compact(iter(node.children, `${parent}${node.key}.`)).join('\n');
+        return iter(node.children, `${parent}${node.key}.`);
       case 'unchanged':
         return null;
       case 'updated':
@@ -24,8 +24,8 @@ export default (ast) => {
       case 'added':
         return `Property '${parent}${node.key}' was added with value: ${getProcessedValue(node.afterValue)}`;
       default:
-        return 'error';
+        throw new Error('Nonexistent node type');
     }
   });
-  return _.compact(iter(ast, '')).join('\n');
+  return _.compact(_.flattenDeep(iter(ast, ''))).join('\n');
 };

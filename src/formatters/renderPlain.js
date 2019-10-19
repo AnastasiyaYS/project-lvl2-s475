@@ -24,7 +24,7 @@ export default (ast) => {
       case 'added':
         return `Property '${parent}${node.key}' was added with value: ${getProcessedValue(node.afterValue)}`;
       default:
-        throw new Error('Nonexistent node type');
+        throw new Error(`Nonexistent node type: ${node.type}, node: ${node}`);
     }
   });
   return _.compact(_.flattenDeep(iter(ast, ''))).join('\n');
